@@ -12,13 +12,14 @@ public class RegistroContaService {
 
 	@Autowired
 	private ContaRepository contaRepository;
-	
+
 	public Conta save(Conta conta) {
 		Conta contaExiste = contaRepository.findByEmail(conta.getEmail());
-		
-		if(contaExiste != null && !contaExiste.equals(conta))
+
+		if (contaExiste != null && !contaExiste.equals(conta))
 			throw new ServicoException("Já existe conta cadastrada com esse email");
-		
+
 		return contaRepository.save(conta);
 	}
+
 }

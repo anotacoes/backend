@@ -3,7 +3,6 @@ package br.com.ifsp.anotacoes.api.exceptionhandler;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
-import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -18,6 +17,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import br.com.ifsp.anotacoes.domain.exception.ServicoException;
+
 
 @ControllerAdvice
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
@@ -25,8 +26,8 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 	@Autowired
 	private MessageSource messageSource;
 	
-	@ExceptionHandler(ServiceException.class)
-	public ResponseEntity<Object> handleService(ServiceException ex, WebRequest request) {
+	@ExceptionHandler(ServicoException.class)
+	public ResponseEntity<Object> handleService(ServicoException ex, WebRequest request) {
 		var status = HttpStatus.BAD_REQUEST;
 		var problem = new Problema();
 		
