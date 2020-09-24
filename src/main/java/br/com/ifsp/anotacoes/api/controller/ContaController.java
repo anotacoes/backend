@@ -18,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifsp.anotacoes.domain.exception.ServicoException;
 import br.com.ifsp.anotacoes.domain.model.Conta;
+import br.com.ifsp.anotacoes.domain.model.Evento;
 import br.com.ifsp.anotacoes.domain.repository.ContaRepository;
+import br.com.ifsp.anotacoes.domain.repository.EventoRepository;
 import br.com.ifsp.anotacoes.domain.service.RegistroContaService;
 
 @RestController
@@ -28,6 +31,9 @@ public class ContaController {
 
 	@Autowired
 	private ContaRepository contaRepository;
+	
+	@Autowired
+	private EventoRepository eventoRepository;
 
 	@Autowired
 	private RegistroContaService registroConta;
@@ -54,7 +60,7 @@ public class ContaController {
 	}
 
 	@PutMapping("/{contaId}")
-	public ResponseEntity<Conta> atualizar(@Valid @PathVariable Long contaId, @RequestBody Conta conta) {
+	public ResponseEntity<Conta> atualizar(@PathVariable Long contaId, @Valid @RequestBody Conta conta) {
 
 		if (!contaRepository.existsById(contaId)) {
 			return ResponseEntity.notFound().build();
@@ -77,5 +83,13 @@ public class ContaController {
 
 		return ResponseEntity.noContent().build();
 	}
+	
+	@GetMapping("/{contaId}/eventos")
+	public List<Evento> listarEventosConta(@PathVariable Long contaId) {
+		Conta conta = contaRepository.findById(contaId).orElseThrow(() -> new ServicoException("Conta não encontrada"));
+		
+		return eventoRepository.findByConta(conta);		
+	}
+
 
 }
