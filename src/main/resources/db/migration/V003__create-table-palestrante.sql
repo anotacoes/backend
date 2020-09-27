@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS palestrante(
+	id BIGINT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(30),
+    
+    PRIMARY KEY (id)
+);

@@ -8,20 +8,21 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
-public class EventoInput {
-
+@Getter @Setter
+public class PalestraInput {
+	
 	@NotNull
 	private ContaAbstractModel conta;
+
+	@NotNull
+	private EventoAbstractModel evento;
+	
+	@NotNull
+	private PalestranteAbstractModel palestrante;
 	
 	@NotBlank
 	private String nome;
 	
 	@NotNull
-	private Date dataInicio;
-	
-	@NotNull
-	private Date dataFim;
-
+	private Date data;
 }

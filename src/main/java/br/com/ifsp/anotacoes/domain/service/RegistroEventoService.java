@@ -11,20 +11,20 @@ import br.com.ifsp.anotacoes.domain.repository.EventoRepository;
 
 @Service
 public class RegistroEventoService {
-	
+
 	@Autowired
 	private ContaRepository contaRepository;
 
 	@Autowired
 	private EventoRepository eventoRepository;
-	
+
 	public Evento salvar(Evento evento) {
 
 		Conta conta = contaRepository.findById(evento.getConta().getId())
-				.orElseThrow(() -> new ServicoException("Cliente não encontrado"));
+				.orElseThrow(() -> new ServicoException("Conta não encontrado"));
 
 		evento.setConta(conta);
-		
+
 		return eventoRepository.save(evento);
 	}
 
