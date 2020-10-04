@@ -32,7 +32,7 @@ public class ContaController {
 
 	@Autowired
 	private ContaRepository contaRepository;
-	
+
 	@Autowired
 	private EventoRepository eventoRepository;
 
@@ -57,7 +57,7 @@ public class ContaController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Conta salvar(@Valid @RequestBody Conta conta) {
-		return registroConta.save(conta);
+		return registroConta.salvar(conta);
 	}
 
 	@PutMapping("/{contaId}")
@@ -68,7 +68,7 @@ public class ContaController {
 		}
 
 		conta.setId(contaId);
-		conta = registroConta.save(conta);
+		conta = registroConta.salvar(conta);
 
 		return ResponseEntity.ok(conta);
 	}
@@ -84,27 +84,26 @@ public class ContaController {
 
 		return ResponseEntity.noContent().build();
 	}
-	
+
 	@GetMapping("/login")
-	public ResponseEntity<Conta> login(@RequestBody ContaAbstractLogin abstractLogin){
+	public ResponseEntity<Conta> login(@RequestBody ContaAbstractLogin abstractLogin) {
 		Conta conta = contaRepository.findByLogin(abstractLogin.getLogin());
-		
+
 		if (conta != null) {
-			if(conta.getSenha().equals(abstractLogin.getSenha()))
+			if (conta.getSenha().equals(abstractLogin.getSenha()))
 				return ResponseEntity.ok(conta);
 			else
 				throw new ServicoException("Senha errada!");
 		}
-		
+
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@GetMapping("/{contaId}/eventos")
 	public List<Evento> listarEventosConta(@PathVariable Long contaId) {
 		Conta conta = contaRepository.findById(contaId).orElseThrow(() -> new ServicoException("Conta não encontrada"));
-		
-		return eventoRepository.findByConta(conta);		
-	}
 
+		return eventoRepository.findByConta(conta);
+	}
 
 }

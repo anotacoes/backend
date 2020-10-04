@@ -29,10 +29,10 @@ public class EventoController {
 
 	@Autowired
 	private EventoRepository eventoRepository;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
 	private RegistroEventoService registroEventoService;
 
@@ -54,9 +54,9 @@ public class EventoController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Evento salvar(@Valid @RequestBody EventoInput eventoInput) {
-		
+
 		Evento evento = toEntity(eventoInput);
-		
+
 		Evento eventoExiste = eventoRepository.findByNome(evento.getNome());
 
 		if (eventoExiste != null && !eventoExiste.equals(evento))
@@ -64,9 +64,9 @@ public class EventoController {
 
 		return registroEventoService.salvar(evento);
 	}
-	
+
 	private Evento toEntity(EventoInput eventoInput) {
 		return modelMapper.map(eventoInput, Evento.class);
 	}
-	
+
 }

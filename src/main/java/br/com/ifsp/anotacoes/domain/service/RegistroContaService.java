@@ -13,13 +13,13 @@ public class RegistroContaService {
 	@Autowired
 	private ContaRepository contaRepository;
 
-	public Conta save(Conta conta) {
+	public Conta salvar(Conta conta) {
 		Conta contaExisteEmail = contaRepository.findByEmail(conta.getEmail());
 		Conta contaExisteLogin = contaRepository.findByLogin(conta.getLogin());
-		
+
 		if (contaExisteEmail != null && !contaExisteEmail.equals(conta))
 			throw new ServicoException("Já existe conta cadastrada com esse email");
-		
+
 		if (contaExisteLogin != null && !contaExisteLogin.equals(conta))
 			throw new ServicoException("Já existe conta cadastrada com esse login");
 

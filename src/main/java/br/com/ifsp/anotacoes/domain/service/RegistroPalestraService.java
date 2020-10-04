@@ -18,10 +18,10 @@ public class RegistroPalestraService {
 
 	@Autowired
 	private PalestraRepository palestraRepository;
-	
+
 	@Autowired
 	private ContaRepository contaRepository;
-	
+
 	@Autowired
 	private PalestranteRepository palestranteRepository;
 
@@ -32,10 +32,10 @@ public class RegistroPalestraService {
 
 		Conta conta = contaRepository.findById(palestra.getConta().getId())
 				.orElseThrow(() -> new ServicoException("Conta não encontrada"));
-		
+
 		Evento evento = eventoRepository.findById(palestra.getEvento().getId())
 				.orElseThrow(() -> new ServicoException("Evento não encontrado"));
-		
+
 		Palestrante palestrante = palestranteRepository.findById(palestra.getPalestrante().getId())
 				.orElseThrow(() -> new ServicoException("Palestrante não encontrado"));
 

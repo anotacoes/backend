@@ -7,9 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EventoAbstractModel {
+public class PalestraAbstractModel {
 
 	@NotNull
 	private Long id;
-
 }

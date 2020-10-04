@@ -1,7 +1,5 @@
 package br.com.ifsp.anotacoes.api.model;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -10,18 +8,15 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EventoInput {
+public class AnotacaoInput {
 
 	@NotNull
 	private ContaAbstractModel conta;
 
+	@NotNull
+	private PalestraAbstractModel palestra;
+
 	@NotBlank
-	private String nome;
-
-	@NotNull
-	private Date dataInicio;
-
-	@NotNull
-	private Date dataFim;
+	private String texto;
 
 }

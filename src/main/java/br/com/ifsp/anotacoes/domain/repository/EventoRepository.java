@@ -12,6 +12,7 @@ import br.com.ifsp.anotacoes.domain.model.Evento;
 public interface EventoRepository extends JpaRepository<Evento, Long> {
 
 	Evento findByNome(String nome);
+
 	List<Evento> findByConta(Conta conta);
-	
+
 }

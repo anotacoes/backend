@@ -10,7 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @JsonInclude(Include.NON_NULL)
 public class Problema {
 
@@ -18,12 +19,14 @@ public class Problema {
 	private OffsetDateTime dataHora;
 	private String titulo;
 	private List<Campo> campos;
-	
-	@AllArgsConstructor @Getter @Setter
+
+	@AllArgsConstructor
+	@Getter
+	@Setter
 	public static class Campo {
-		
+
 		private String nome;
 		private String mensagem;
 	}
-	
+
 }

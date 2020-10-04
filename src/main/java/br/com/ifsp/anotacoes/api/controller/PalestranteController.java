@@ -26,12 +26,12 @@ public class PalestranteController {
 
 	@Autowired
 	private PalestranteRepository palestranteRepository;
-	
+
 	@GetMapping
 	public List<Palestrante> listar() {
 		return palestranteRepository.findAll();
 	}
-	
+
 	@GetMapping("/{palestranteId}")
 	public ResponseEntity<Palestrante> buscar(@PathVariable Long palestranteId) {
 		Optional<Palestrante> palestrante = palestranteRepository.findById(palestranteId);
@@ -41,15 +41,15 @@ public class PalestranteController {
 
 		return ResponseEntity.notFound().build();
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Palestrante salvar(@Valid @RequestBody Palestrante palestrante) {
 		Palestrante palestranteExiste = palestranteRepository.findByNome(palestrante.getNome());
-		
-		if(palestranteExiste != null && !palestranteExiste.equals(palestrante))
+
+		if (palestranteExiste != null && !palestranteExiste.equals(palestrante))
 			throw new ServicoException("Já existe um palestrante cadastrado com esse nome");
-		
+
 		return palestranteRepository.save(palestrante);
 	}
 }
