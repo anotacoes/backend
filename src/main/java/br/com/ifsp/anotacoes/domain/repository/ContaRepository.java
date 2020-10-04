@@ -9,5 +9,7 @@ import br.com.ifsp.anotacoes.domain.model.Conta;
 public interface ContaRepository extends JpaRepository<Conta, Long> {
 
 	Conta findByEmail(String email);
-	
+
+	Conta findByLogin(String login);
+
 }

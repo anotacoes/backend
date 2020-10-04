@@ -14,10 +14,14 @@ public class RegistroContaService {
 	private ContaRepository contaRepository;
 
 	public Conta save(Conta conta) {
-		Conta contaExiste = contaRepository.findByEmail(conta.getEmail());
-
-		if (contaExiste != null && !contaExiste.equals(conta))
+		Conta contaExisteEmail = contaRepository.findByEmail(conta.getEmail());
+		Conta contaExisteLogin = contaRepository.findByLogin(conta.getLogin());
+		
+		if (contaExisteEmail != null && !contaExisteEmail.equals(conta))
 			throw new ServicoException("Já existe conta cadastrada com esse email");
+		
+		if (contaExisteLogin != null && !contaExisteLogin.equals(conta))
+			throw new ServicoException("Já existe conta cadastrada com esse login");
 
 		return contaRepository.save(conta);
 	}

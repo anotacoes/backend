@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.ifsp.anotacoes.api.model.ContaAbstractLogin;
 import br.com.ifsp.anotacoes.domain.exception.ServicoException;
 import br.com.ifsp.anotacoes.domain.model.Conta;
 import br.com.ifsp.anotacoes.domain.model.Evento;
@@ -82,6 +83,20 @@ public class ContaController {
 		contaRepository.deleteById(contaId);
 
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/login")
+	public ResponseEntity<Conta> login(@RequestBody ContaAbstractLogin abstractLogin){
+		Conta conta = contaRepository.findByLogin(abstractLogin.getLogin());
+		
+		if (conta != null) {
+			if(conta.getSenha().equals(abstractLogin.getSenha()))
+				return ResponseEntity.ok(conta);
+			else
+				throw new ServicoException("Senha errada!");
+		}
+		
+		return ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/{contaId}/eventos")
