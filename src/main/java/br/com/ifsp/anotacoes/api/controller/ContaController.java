@@ -85,7 +85,7 @@ public class ContaController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@GetMapping("/login")
+	@PostMapping("/login")
 	public ResponseEntity<Conta> login(@RequestBody ContaAbstractLogin abstractLogin) {
 		Conta conta = contaRepository.findByLogin(abstractLogin.getLogin());
 
