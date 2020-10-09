@@ -20,10 +20,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsp.anotacoes.api.model.ContaAbstractLogin;
 import br.com.ifsp.anotacoes.domain.exception.ServicoException;
+import br.com.ifsp.anotacoes.domain.model.Anotacao;
 import br.com.ifsp.anotacoes.domain.model.Conta;
 import br.com.ifsp.anotacoes.domain.model.Evento;
+import br.com.ifsp.anotacoes.domain.model.Palestra;
+import br.com.ifsp.anotacoes.domain.repository.AnotacaoRepository;
 import br.com.ifsp.anotacoes.domain.repository.ContaRepository;
 import br.com.ifsp.anotacoes.domain.repository.EventoRepository;
+import br.com.ifsp.anotacoes.domain.repository.PalestraRepository;
 import br.com.ifsp.anotacoes.domain.service.RegistroContaService;
 
 @RestController
@@ -35,6 +39,12 @@ public class ContaController {
 
 	@Autowired
 	private EventoRepository eventoRepository;
+	
+	@Autowired
+	private AnotacaoRepository anotacaoRepository;
+	
+	@Autowired
+	private PalestraRepository palestraRepository;
 
 	@Autowired
 	private RegistroContaService registroConta;
@@ -104,6 +114,20 @@ public class ContaController {
 		Conta conta = contaRepository.findById(contaId).orElseThrow(() -> new ServicoException("Conta não encontrada"));
 
 		return eventoRepository.findByConta(conta);
+	}
+	
+	@GetMapping("/{contaId}/palestras")
+	public List<Palestra> listarPalestrasConta(@PathVariable Long contaId) {
+		Conta conta = contaRepository.findById(contaId).orElseThrow(() -> new ServicoException("Conta não encontrada"));
+
+		return palestraRepository.findByConta(conta);
+	}
+	
+	@GetMapping("/{contaId}/anotacoes")
+	public List<Anotacao> listarAnotacoesConta(@PathVariable Long contaId) {
+		Conta conta = contaRepository.findById(contaId).orElseThrow(() -> new ServicoException("Conta não encontrada"));
+
+		return anotacaoRepository.findByConta(conta);
 	}
 
 }
