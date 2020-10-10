@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ifsp.anotacoes.api.model.PalestraInput;
 import br.com.ifsp.anotacoes.domain.exception.ServicoException;
+import br.com.ifsp.anotacoes.domain.model.Evento;
 import br.com.ifsp.anotacoes.domain.model.Palestra;
+import br.com.ifsp.anotacoes.domain.repository.EventoRepository;
 import br.com.ifsp.anotacoes.domain.repository.PalestraRepository;
 import br.com.ifsp.anotacoes.domain.service.RegistroPalestraService;
 
@@ -34,11 +36,18 @@ public class PalestraController {
 	private RegistroPalestraService registroPalestraService;
 
 	@Autowired
+	private EventoRepository eventoRepository;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 
 	@GetMapping
-	public List<Palestra> listar() {
-		return palestraRepository.findAll();
+	public List<Palestra> listar(@PathVariable Long eventoId) {
+		
+		Evento evento = eventoRepository.findById(eventoId)
+				.orElseThrow(() -> new ServicoException("Evento não encontrado"));
+		
+		return palestraRepository.findByEvento(evento);
 	}
 
 	@GetMapping("/{palestraId}")
